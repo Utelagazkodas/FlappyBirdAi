@@ -17,7 +17,7 @@
     "tsconfig.json": true,
     "tsconfig.node.json": true,
     "docs": true,
-    ".vscode": false
+    ".vscode": true
   },
   "explorerExclude.backup": {}
 }
