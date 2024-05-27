@@ -1,8 +1,14 @@
 import { useEffect, useRef } from "react"
+import { birds, draw } from "./game/draw";
+import { bird } from "./game/bird";
+import { vector2 } from "./misc/classes";
 
 
 function App() :JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    birds.push(new bird())
+    birds[1].velocity = new vector2(1, 1)
 
   useEffect(() => {
       const canvas = canvasRef.current;
@@ -16,21 +22,9 @@ function App() :JSX.Element {
 
       let animationFrameId: number;
 
-      const draw = (context: CanvasRenderingContext2D, frameCount: number) => {
-          // Clear the canvas
-          context.clearRect(0, 0, canvas.width, canvas.height);
-
-          // Example drawing: animate a rotating square
-          context.fillStyle = 'red';
-          context.save();
-          context.translate(canvas.width / 2, canvas.height / 2);
-          context.rotate((frameCount * 0.01) % (2 * Math.PI));
-          context.fillRect(-50, -50, 100, 100);
-          context.restore();
-      };
 
       const render = (frameCount: number) => {
-          draw(context, frameCount);
+          draw(context, frameCount, canvas);
           animationFrameId = requestAnimationFrame(() => render(frameCount + 1));
       };
 
@@ -40,7 +34,6 @@ function App() :JSX.Element {
       const resizeCanvas = () => {
           canvas.width = window.innerWidth;
           canvas.height = window.innerHeight;
-          draw(context, 0); // Redraw after resizing
       };
 
       window.addEventListener('resize', resizeCanvas);
