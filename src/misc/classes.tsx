@@ -51,11 +51,6 @@ export class entity {
             ctx.arc(this.position.x, this.position.y, this.size.x, 0, 2 * Math.PI);
             ctx.fillStyle = this.color;
             ctx.fill();
-
-            
-/*             ctx.lineWidth = 4;
-            ctx.strokeStyle = "blue";
-            ctx.stroke(); */
         }
         else if (this.shape == "rectangle") {
             ctx.fillStyle = this.color;
@@ -63,5 +58,9 @@ export class entity {
         }
 
     }
+
+    update(){throw Error("updating non bird or pipe entity")}
+
+    isAlive():boolean {throw Error()}
 
 }

@@ -4,11 +4,35 @@ import { bird } from "./game/bird";
 import { vector2 } from "./misc/classes";
 
 
+
+// Declare the global interface for WindowEventMap
+declare global {
+  interface WindowEventMap {
+    keydown: KeyboardEvent;
+  }
+}
+
+
+
 function App() :JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    birds.push(new bird())
-    birds[1].velocity = new vector2(1, 1)
+    birds.push(new bird(true))
+
+
+    // Handle key press event
+  const handleUserKeyPress = (event: KeyboardEvent) => {
+    const { key } = event;
+   
+      if(key == " "){
+        birds.forEach((curBird)=> {
+          if(curBird.player){
+            curBird.jump()
+          }
+        })
+      }
+    
+  };
 
   useEffect(() => {
       const canvas = canvasRef.current;
@@ -37,10 +61,12 @@ function App() :JSX.Element {
       };
 
       window.addEventListener('resize', resizeCanvas);
+      window.addEventListener("keydown", handleUserKeyPress);
 
       // Cleanup function
       return () => {
           window.removeEventListener('resize', resizeCanvas);
+          window.removeEventListener("keydown", handleUserKeyPress);
           cancelAnimationFrame(animationFrameId);
       };
   }, []);
