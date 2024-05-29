@@ -14,7 +14,20 @@ export class vector2 {
 
     static zero: vector2 = new vector2(0, 0)
 
+    // get distance between two points
+    static distance(a: vector2, b:vector2) : number {
+        return Math.sqrt((a.x - b.x)^2 + (a.y, b.y)^2)
+    }
 
+    normalized() : vector2 {
+        // the reciprocal of the magnitude 
+        let t = 1 / this.magnitude()
+        return new vector2(this.x * t, this.y * t)
+    }
+
+    magnitude() : number {
+        return Math.sqrt(this.x ^ 2 + this.y ^ 2)
+    }
 }
 
 
@@ -55,7 +68,12 @@ export class entity {
         else if (this.shape == "rectangle") {
             ctx.fillStyle = this.color;
             ctx.fillRect(this.position.x, this.position.y, this.size.x, this.size.y);
+            
+        }else {
+            throw Error("shape error when trying to draw")
         }
+
+
 
     }
 
