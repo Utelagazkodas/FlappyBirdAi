@@ -28,6 +28,18 @@ export class vector2 {
     magnitude() : number {
         return Math.sqrt(this.x ^ 2 + this.y ^ 2)
     }
+
+    abs() : vector2 {
+        return new vector2(Math.abs(this.x), Math.abs(this.y))
+    }
+
+    multiply(num : number) : vector2 {
+        return new vector2(this.x * num, this.y * num)
+    }
+
+    divide(num : number) : vector2 {
+        return this.multiply(1 / num)
+    }
 }
 
 
@@ -39,14 +51,20 @@ export class entity {
     color: string
     bird? : bird
 
-    constructor(position: vector2, size: vector2, shape: string, color: string) {
+    constructor(position: vector2, size: vector2, shape: string, color: string, render? : boolean) {
         this.position = position
         this.size = size
         this.color = color
 
         if (shape == "circle" || shape == "rectangle") {
             this.shape = shape
-            entities.push(this)
+
+            if(render){
+                entities.push(this)
+            }
+            if(shape == "circle"){
+                this.size.y = this.size.x
+            }
 
             return
         }
@@ -78,6 +96,10 @@ export class entity {
     }
 
     update(){throw Error("updating non bird or pipe entity")}
+
+    copy() : entity{
+        return new entity(this.position, this.size, this.shape, this.color, false)
+    }
 
     isAlive():boolean {throw Error()}
 

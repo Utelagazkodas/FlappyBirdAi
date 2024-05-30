@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
-import { birds, draw } from "./game/draw";
+import { birds, draw, entities } from "./game/draw";
 import { bird } from "./game/bird";
-import { vector2 } from "./misc/classes";
+import { entity, vector2 } from "./misc/classes";
 
 
 
@@ -18,6 +18,8 @@ function App() :JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
     birds.push(new bird(true))
+
+    entities.push(new entity(new vector2(0, -200), new vector2(300, 20), "rectangle", "red"))
 
 
     // Handle key press event
