@@ -12,14 +12,15 @@ declare global {
   }
 }
 
-
+export let CONTEXT : CanvasRenderingContext2D;
 
 function App() :JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
     birds.push(new bird(true))
+    birds[0].position.x = -10
 
-    entities.push(new entity(new vector2(0, -200), new vector2(300, 20), "rectangle", "red"))
+    entities.push(new entity(new vector2(200, 0), new vector2(300, 300), "rectangle", "red"))
 
 
     // Handle key press event
@@ -33,6 +34,19 @@ function App() :JSX.Element {
           }
         })
       }
+
+      if(key == "w"){
+        birds[0].position.y -= 10
+      }
+      if(key == "a"){
+        birds[0].position.x -= 10
+      }
+      if(key == "s"){
+        birds[0].position.y += 10
+      }
+      if(key == "d"){
+        birds[0].position.x += 10
+      }
     
   };
 
@@ -41,6 +55,8 @@ function App() :JSX.Element {
       if (!canvas) return;
       const context = canvas.getContext('2d');
       if (!context) return;
+
+      CONTEXT = context
 
       // Set canvas dimensions
       canvas.width = window.innerWidth;

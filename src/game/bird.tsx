@@ -7,7 +7,7 @@ export class bird extends entity{
     velocity : vector2
     player? : boolean
 
-    gravity : number = 10
+    gravity : number = 0
 
 
     constructor(player? : boolean){
@@ -43,9 +43,7 @@ export class bird extends entity{
 
         entities.forEach(element => {
             
-            if(!element.bird){
-                console.log(element.position.y)
-
+            if(!element.bird){ 
                 if(getCollision(element, this)){
                     return true
                 }

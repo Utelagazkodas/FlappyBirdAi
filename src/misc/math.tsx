@@ -1,3 +1,4 @@
+import { CONTEXT } from "../App";
 import { entity, vector2 } from "./classes";
 
 export function getCollision(a: entity, b: entity): boolean {
@@ -11,7 +12,6 @@ export function getCollision(a: entity, b: entity): boolean {
         }
     }
     else {
-        console.log("asd")
 
         if (a.shape == "rectangle" && b.shape == "circle") {
             return recCirCollision(a, b)
@@ -44,6 +44,7 @@ function cirCirCollision(a: entity, b: entity): boolean {
 }
 
 function recCirCollision(rectangle: entity, circle: entity): boolean {
+    console.log(vector2.distance(rectangle.position, circle.position))
     if (vector2.distance(rectangle.position, circle.position) <= circle.size.x + getRecSideDistance(rectangle, new vector2(rectangle.position.x - circle.position.x, rectangle.position.y - circle.position.y))) {
         return true
     }
@@ -52,20 +53,25 @@ function recCirCollision(rectangle: entity, circle: entity): boolean {
 
 
 
-function getRecSideDistance(rectangle: entity, line: vector2): number {
+function getRecSideDistance(rectangle: entity, line: vector2, second? : boolean): number {
     // tries it with the left (/right) side
     const halfWidth = rectangle.size.x / 2
 
+    
+
     if(line.x == 0){
         return halfWidth
+    } 
+    if(line.y == 0){
+        return rectangle.size.y / 2
     }
 
-    let t : vector2 = line.abs()
+    let t : vector2 = line.abs() 
     t = new vector2(1 * halfWidth, (t.y / t.x ) * halfWidth)
 
-    if(t.magnitude() > vector2.distance(vector2.zero, rectangle.size.divide(2))) {
-        
-        return getRecSideDistance(new entity(rectangle.position, new vector2(rectangle.size.y, rectangle.size.x), rectangle.shape, rectangle.color), new vector2(line.y, line.x))
+    if(t.magnitude() > vector2.distance(vector2.zero, rectangle.size.divide(2)) && !second) {
+         
+        return getRecSideDistance(new entity(rectangle.position, new vector2(rectangle.size.y, rectangle.size.x), rectangle.shape, rectangle.color), new vector2(line.y, line.x), true)
     }
 
     return t.magnitude()
