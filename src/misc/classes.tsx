@@ -1,5 +1,6 @@
 import { bird } from "../game/bird"
 import { entities } from "../game/draw"
+import { pipe } from "../game/pipe"
 
 export class vector2 {
     x: number
@@ -26,7 +27,7 @@ export class vector2 {
     }
 
     magnitude() : number {
-        return Math.sqrt(this.x ^ 2 + this.y ^ 2)
+        return Math.sqrt(this.x *this.x  + this.y * this.y)
     }
 
     abs() : vector2 {
@@ -50,6 +51,7 @@ export class entity {
     shape: string
     color: string
     bird? : bird
+    pipe? : pipe
 
     constructor(position: vector2, size: vector2, shape: string, color: string, render? : boolean) {
         this.position = position
@@ -73,9 +75,6 @@ export class entity {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-        if(this.bird){
-            this.bird.update()
-        }
 
         if (this.shape == "circle") {
             ctx.beginPath();
@@ -85,7 +84,7 @@ export class entity {
         }
         else if (this.shape == "rectangle") {
             ctx.fillStyle = this.color;
-            ctx.fillRect(this.position.x , this.position.y , this.size.x, this.size.y);
+            ctx.fillRect(this.position.x - this.size.x / 2, this.position.y - this.size.y / 2, this.size.x, this.size.y);
             
         }else {
             throw Error("shape error when trying to draw")
@@ -95,12 +94,16 @@ export class entity {
 
     }
 
-    update(){throw Error("updating non bird or pipe entity")}
+    destroy(){
+        this.update = ()=>{}
+        this.draw = ()=>{}
+    }
+
+    update(){}
 
     copy() : entity{
         return new entity(this.position, this.size, this.shape, this.color, false)
     }
 
-    isAlive():boolean {throw Error()}
 
 }

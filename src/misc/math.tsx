@@ -1,4 +1,3 @@
-import { CONTEXT } from "../App";
 import { entity, vector2 } from "./classes";
 
 export function getCollision(a: entity, b: entity): boolean {
@@ -44,8 +43,8 @@ function cirCirCollision(a: entity, b: entity): boolean {
 }
 
 function recCirCollision(rectangle: entity, circle: entity): boolean {
-    console.log(vector2.distance(rectangle.position, circle.position))
     if (vector2.distance(rectangle.position, circle.position) <= circle.size.x + getRecSideDistance(rectangle, new vector2(rectangle.position.x - circle.position.x, rectangle.position.y - circle.position.y))) {
+        console.log("touching")
         return true
     }
     return false
@@ -53,26 +52,31 @@ function recCirCollision(rectangle: entity, circle: entity): boolean {
 
 
 
-function getRecSideDistance(rectangle: entity, line: vector2, second? : boolean): number {
+function getRecSideDistance(rectangle: entity, line: vector2): number {
     // tries it with the left (/right) side
-    const halfWidth = rectangle.size.x / 2
-
-    
 
     if(line.x == 0){
-        return halfWidth
+        return rectangle.size.x / 2
     } 
     if(line.y == 0){
         return rectangle.size.y / 2
     }
 
-    let t : vector2 = line.abs() 
-    t = new vector2(1 * halfWidth, (t.y / t.x ) * halfWidth)
+    // makes the vector have the right proportions
+    let t : vector2 = new vector2(1,line.y / line.x).abs()
 
-    if(t.magnitude() > vector2.distance(vector2.zero, rectangle.size.divide(2)) && !second) {
-         
-        return getRecSideDistance(new entity(rectangle.position, new vector2(rectangle.size.y, rectangle.size.x), rectangle.shape, rectangle.color), new vector2(line.y, line.x), true)
+    // multiplies it by the rectangles width
+    t = t.multiply(rectangle.size.x / 2)
+
+    // if it should relate it to the top side
+    if(t.y > rectangle.size.y / 2){
+        t = new vector2(line.x / line.y,1).abs()
+
+        // multiplies it by the rectangles width
+        t = t.multiply(rectangle.size.y / 2)
     }
 
+
     return t.magnitude()
+    
 }
