@@ -13,6 +13,7 @@ declare global {
 export let CONTEXT: CanvasRenderingContext2D;
 export let WINDOWWIDTH : number
 export let WINDOWHEIGHT : number
+export let CANVAS : HTMLCanvasElement
 export let lastPipe : pipe
 export const pipeDistance : number = 500
 
@@ -68,6 +69,8 @@ function App(): JSX.Element {
     if (!canvas) return;
     const context = canvas.getContext('2d');
     if (!context) return;
+
+    CANVAS = canvas
 
     CONTEXT = context
 

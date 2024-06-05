@@ -1,7 +1,7 @@
 import {  WINDOWHEIGHT } from "../App";
 import { entity, vector2 } from "../misc/classes";
 import { getCollision } from "../misc/math";
-import {  pipes } from "./draw";
+import {   pipes } from "./draw";
 
 export let playing: boolean = false
 
@@ -31,7 +31,7 @@ export class bird extends entity {
             if (this.isDead()) {
                 playing = false
                 this.position = new vector2(10000, 10000)
-
+                
             }
         }
     }
@@ -59,6 +59,7 @@ export class bird extends entity {
             if (getCollision(element.top, this)) {
                 return true
             }
+            console.log(getCollision(element.bottom, this))
             if (getCollision(element.bottom, this)) {
                 return true
             }

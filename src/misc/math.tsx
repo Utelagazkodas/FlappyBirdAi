@@ -43,10 +43,12 @@ function cirCirCollision(a: entity, b: entity): boolean {
 }
 
 function recCirCollision(rectangle: entity, circle: entity): boolean {
-    if (vector2.distance(rectangle.position, circle.position) <= circle.size.x + getRecSideDistance(rectangle, new vector2(rectangle.position.x - circle.position.x, rectangle.position.y - circle.position.y))) {
-        console.log("touching")
-        return true
+    if(recRecCollision(circle, rectangle)){
+        if (vector2.distance(rectangle.position, circle.position) <= circle.size.x + getRecSideDistance(rectangle, new vector2(rectangle.position.x - circle.position.x, rectangle.position.y - circle.position.y))) {   
+            return true
+        }
     }
+
     return false
 }
 
@@ -54,7 +56,6 @@ function recCirCollision(rectangle: entity, circle: entity): boolean {
 
 function getRecSideDistance(rectangle: entity, line: vector2): number {
     // tries it with the left (/right) side
-
     if(line.x == 0){
         return rectangle.size.x / 2
     } 
