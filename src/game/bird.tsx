@@ -4,12 +4,13 @@ import { getCollision } from "../misc/math";
 import {   pipes } from "./draw";
 
 export let playing: boolean = false
+const gravity: number = 8
 
 export class bird extends entity {
     velocity: vector2
     player?: boolean
 
-    gravity: number = 10
+    
 
 
     constructor(player?: boolean) {
@@ -26,7 +27,7 @@ export class bird extends entity {
             this.position.x += this.velocity.x
             this.position.y += this.velocity.y
 
-            this.velocity.y += this.gravity * (1 / 60)
+            this.velocity.y += gravity * (1 / 60)
 
             if (this.isDead()) {
                 playing = false
@@ -42,8 +43,7 @@ export class bird extends entity {
             return
         }
 
-
-        this.velocity.y = -5
+        this.velocity.y = -3
     }
 
     isDead(): boolean {
@@ -59,7 +59,7 @@ export class bird extends entity {
             if (getCollision(element.top, this)) {
                 return true
             }
-            console.log(getCollision(element.bottom, this))
+            
             if (getCollision(element.bottom, this)) {
                 return true
             }

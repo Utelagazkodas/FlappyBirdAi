@@ -29,12 +29,13 @@ function App(): JSX.Element {
   birds.push(new bird(true))
   
   let pipeAmount: number = 10
-
+  
+  if(pipes.length == 0){
   for (let index = 0; index < pipeAmount; index++) {
-    let t = new pipe((Math.random() - 0.5) * 200,  index * pipeDistance)
+    let t = new pipe((Math.random() - 0.5) * 400,  index * pipeDistance)
     pipes.push(t)
     lastPipe = t
-  }
+  }}
 
 
   // Handle key press event

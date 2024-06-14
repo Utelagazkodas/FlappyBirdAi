@@ -2,9 +2,9 @@ import { WINDOWHEIGHT, WINDOWWIDTH, lastPipe, pipeDistance, setLastPipe } from "
 import { entity, vector2 } from "../misc/classes";
 import { playing } from "./bird";
 
-let pipeSpeed : number = 400
+let pipeSpeed : number = 200
 export let pipeThickness  : number= 75
-let pipeGap : number = 200
+let pipeGap : number = 150
 
 export class pipe extends entity{
     top : entity
@@ -26,7 +26,7 @@ export class pipe extends entity{
         }
 
         if(!this.isAlive()){
-
+            console.log(this)
 
             this.top.position.x = lastPipe.position.x + pipeDistance
             this.bottom.position.x = lastPipe.position.x + pipeDistance

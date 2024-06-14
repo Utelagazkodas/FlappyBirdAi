@@ -2,6 +2,7 @@ import { entity, vector2 } from "./classes";
 
 export function getCollision(a: entity, b: entity): boolean {
 
+
     if (a.shape == b.shape) {
         if (a.shape == "circle") {
             return cirCirCollision(a, b)
@@ -43,11 +44,10 @@ function cirCirCollision(a: entity, b: entity): boolean {
 }
 
 function recCirCollision(rectangle: entity, circle: entity): boolean {
-    if(recRecCollision(circle, rectangle)){
         if (vector2.distance(rectangle.position, circle.position) <= circle.size.x + getRecSideDistance(rectangle, new vector2(rectangle.position.x - circle.position.x, rectangle.position.y - circle.position.y))) {   
             return true
         }
-    }
+    
 
     return false
 }

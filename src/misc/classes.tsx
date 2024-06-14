@@ -1,6 +1,5 @@
 import { bird } from "../game/bird"
 import { entities } from "../game/draw"
-import { pipe } from "../game/pipe"
 
 export class vector2 {
     x: number
@@ -51,7 +50,6 @@ export class entity {
     shape: string
     color: string
     bird? : bird
-    pipe? : pipe
 
     constructor(position: vector2, size: vector2, shape: string, color: string, render? : boolean) {
         this.position = position
