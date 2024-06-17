@@ -1,17 +1,32 @@
 import {  WINDOWHEIGHT } from "../App";
 import { entity, vector2 } from "../misc/classes";
 import { getCollision } from "../misc/math";
-import {   pipes } from "./draw";
+import { birds, pipes } from "./draw";
+import { createPipes } from "./pipe";
 
 export let playing: boolean = false
 const gravity: number = 8
+
+export function restart() : void {
+    if(birds[0]){
+
+        console.log("royale giant")
+
+        createPipes(10, true)
+
+        birds[0] = new bird(true)
+
+        playing = true
+    }
+}
+
 
 export class bird extends entity {
     velocity: vector2
     player?: boolean
 
     
-
+    alive : boolean = true
 
     constructor(player?: boolean) {
         super(vector2.zero, new vector2(20, 20), "circle", "yellow", true)
@@ -23,14 +38,19 @@ export class bird extends entity {
     }
 
     update() {
-        if (playing) {
+        if ((!this.player && this.alive) || (this.player && playing)) {
             this.position.x += this.velocity.x
             this.position.y += this.velocity.y
 
             this.velocity.y += gravity * (1 / 60)
 
             if (this.isDead()) {
-                playing = false
+                this.alive = false
+
+                if(this.player){
+                    playing = false
+                }
+
                 this.position = new vector2(10000, 10000)
                 
             }
@@ -39,8 +59,8 @@ export class bird extends entity {
 
     jump() {
         if (this.player && playing == false) {
-            playing = true
-            return
+            restart()
+        
         }
 
         this.velocity.y = -3
@@ -55,6 +75,9 @@ export class bird extends entity {
         for (let index = 0; index < pipes.length; index++) {
             const element = pipes[index];
 
+            if(!element){
+                continue
+            }
 
             if (getCollision(element.top, this)) {
                 return true

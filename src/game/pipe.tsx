@@ -1,6 +1,7 @@
 import { WINDOWHEIGHT, WINDOWWIDTH, lastPipe, pipeDistance, setLastPipe } from "../App";
 import { entity, vector2 } from "../misc/classes";
 import { playing } from "./bird";
+import { pipes, setPipes } from "./draw";
 
 let pipeSpeed : number = 200
 export let pipeThickness  : number= 75
@@ -26,7 +27,7 @@ export class pipe extends entity{
         }
 
         if(!this.isAlive()){
-            console.log(this)
+            
 
             this.top.position.x = lastPipe.position.x + pipeDistance
             this.bottom.position.x = lastPipe.position.x + pipeDistance
@@ -44,3 +45,24 @@ export class pipe extends entity{
         return true
     }
 }
+
+export function createPipes(n : number, reset? : boolean) : void {
+    let pipeAmount: number = n
+
+    if(reset){
+        pipes.forEach((pipe) => {
+            pipe.top.destroy()
+            pipe.bottom.destroy()
+        })
+        setPipes([])
+    }
+  
+    if(pipes.length == 0){
+    for (let index = 0; index < pipeAmount; index++) {
+      let t = new pipe((Math.random() - 0.5) * 400,  index * pipeDistance)
+      pipes.push(t)
+      setLastPipe(t)
+    }
+    }
+}
+

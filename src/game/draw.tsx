@@ -1,3 +1,4 @@
+import { lastPipe } from "../App";
 import { entity } from "../misc/classes";
 import { bird } from "./bird";
 import { pipe } from "./pipe";
@@ -7,11 +8,18 @@ export let entities : entity[] = []
 export let birds : bird[] = []
 export let pipes : pipe[] = []
 
+export function setPipes(set : pipe[]):void{
+    pipes = set
+}
+
 export function draw (context: CanvasRenderingContext2D, frameCount: number, canvas : HTMLCanvasElement){
     // Clear the canvas
     context.clearRect(0, 0, canvas.width, canvas.height)
 
-    console.log(frameCount)
+    //console.log(frameCount)
+
+    console.log(lastPipe.position.x)
+
     context.save();
     context.translate(canvas.width / 2, canvas.height / 2);
 
