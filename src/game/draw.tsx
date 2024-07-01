@@ -18,12 +18,11 @@ export function draw (context: CanvasRenderingContext2D, frameCount: number, can
 
     //console.log(frameCount)
 
-    console.log(lastPipe.position.x)
-
     context.save();
     context.translate(canvas.width / 2, canvas.height / 2);
 
     entities.forEach((curEntity)=>{
+        
         curEntity.draw(context)
         curEntity.update()
     })

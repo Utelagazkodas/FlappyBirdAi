@@ -8,12 +8,13 @@ export let playing: boolean = false
 const gravity: number = 8
 
 export function restart() : void {
+
     if(birds[0]){
 
-        console.log("royale giant")
-
+        console.log("asfas")
         createPipes(10, true)
 
+        birds[0].destroy()
         birds[0] = new bird(true)
 
         playing = true
@@ -58,9 +59,10 @@ export class bird extends entity {
     }
 
     jump() {
+        console.log(this.player && playing == false)
         if (this.player && playing == false) {
             restart()
-        
+            return
         }
 
         this.velocity.y = -3
